@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dheeren | Portfolio</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ===== HEADER / NAV ===== -->
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="#top" class="logo">Dheeren</a>
+      <nav class="nav">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#education">Education</a>
+        <a href="#certificates">Certificates</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ===== HERO ===== -->
+  <section id="top" class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="container">
+      <div class="hero-content">
+        <p class="eyebrow">Hello, I'm</p>
+        <h1>Dheeren</h1>
+        <p class="tagline">Data Science Student &amp; Aspiring Developer</p>
+        <a href="#contact" class="btn">Get in touch</a>
+      </div>
+    </div>
+  </section>
+
+<!-- ===== ABOUT ===== -->
+<section id="about" class="section">
+  <div class="container">
+    <p class="eyebrow-label">Get to know me</p>
+    <h2>About</h2>
+    <p class="about-text">
+      I'm <strong>Dheeren</strong>, a third-year B.Tech student specializing in
+      <span class="highlight">Data Science</span> at Nagarjuna College of Engineering
+      and Technology, Bangalore. I'm currently maintaining a
+      <span class="highlight">CGPA of 8.09</span> while building a strong foundation
+      in SQL, Python, and C. I enjoy working with data and I'm looking forward to
+      applying what I've learned to real-world projects.
+    </p>
+  </div>
+</section>
+
+ <!-- ===== SKILLS ===== -->
+<section id="skills" class="section section-muted">
+  <div class="container">
+    <p class="eyebrow-label">What I work with</p>
+    <h2>Skills</h2>
+    <div class="skills-grid">
+
+      <div class="skill-card">
+        <span class="skill-icon">🐍</span>
+        <h3>Python</h3>
+        <p>Core programming, data handling</p>
+      </div>
+
+      <div class="skill-card">
+        <span class="skill-icon">🗄️</span>
+        <h3>SQL</h3>
+        <p>Querying & database fundamentals</p>
+      </div>
+
+      <div class="skill-card">
+        <span class="skill-icon">⚙️</span>
+        <h3>C</h3>
+        <p>Programming fundamentals</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+  <!-- ===== EDUCATION ===== -->
+  <section id="education" class="section">
+    <div class="container">
+      <h2>Education</h2>
+      <div class="edu-card">
+        <h3>B.Tech, Data Science</h3>
+        <p class="edu-meta">Nagarjuna College of Engineering and Technology, Bangalore</p>
+        <p class="edu-meta">3rd Year &middot; CGPA: 8.09</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CERTIFICATES ===== -->
+<section id="certificates" class="section">
+  <div class="container">
+    <h2>Certificates</h2>
+    <div class="cert-grid" id="certGrid">
+      <p class="cert-loading">Loading certificates…</p>
+    </div>
+  </div>
+</section>
+<!-- ===== PROJECTS ===== -->
+<section id="projects" class="section">
+  <div class="project-grid">
+
+  <div class="project-card">
+    <div class="project-info">
+      <h3>Yuvi Nature Products</h3>
+      <p class="project-desc">
+        A responsive business website for an eco-friendly arecanut leaf plate manufacturer —
+        featuring a product catalog, company info, and a working enquiry form with
+        WhatsApp integration for direct customer contact. Designed, built, and deployed live.
+      </p>
+      <div class="project-tags">
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+        <span class="tag">JavaScript</span>
+        <span class="tag">Netlify</span>
+      </div>
+      <div class="project-links">
+        <a href="https://yuvinature-products.netlify.app" target="_blank" rel="noopener" class="btn">Live Site</a>
+        <a href="https://github.com/Dheeren04/yuvinature-products" target="_blank" rel="noopener" class="btn btn-ghost">GitHub</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="project-card">
+    <div class="project-info">
+      <h3>Blinkit Sales Dashboard — Power BI</h3>
+      <p class="project-desc">
+        An interactive Power BI dashboard analyzing Blinkit's sales, orders, and outlet performance.
+        Surfaces total sales KPIs, category-wise breakdowns, regional trends, and monthly sales patterns —
+        revealing insights like Fruits & Vegetables driving the highest sales and Tier-1 cities
+        generating the most revenue.
+      </p>
+      <div class="project-tags">
+        <span class="tag">Power BI</span>
+        <span class="tag">Excel</span>
+        <span class="tag">Data Analysis</span>
+      </div>
+      <div class="project-links">
+        <button
+          type="button"
+          class="btn"
+          onclick="openCertModal('https://raw.githubusercontent.com/Dheeren04/Blinkit-PowerBI-Dashboard/main/dashboard.png', 'Blinkit Power BI Dashboard')"
+        >
+          View Dashboard
+        </button>
+        <a href="https://github.com/Dheeren04/Blinkit-PowerBI-Dashboard" target="_blank" rel="noopener" class="btn btn-ghost">GitHub Repo</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+</section>
+<!-- ===== CONTACT ===== -->
+<section id="contact" class="section section-muted">
+  <div class="container">
+    <h2>Contact</h2>
+    <p>Feel free to reach out — I'd love to connect.</p>
+
+    <div class="contact-links">
+      <a href="mailto:dheeren438@gmail.com" class="btn btn-accent">
+        dheeren438@gmail.com
+      </a>
+
+      <a href="tel:+91 7624956501" class="btn">
+        +91 76249 56501
+      </a>
+
+      <a href="https://www.linkedin.com/in/dheerengowda/" target="_blank" rel="noopener" class="btn">
+        LinkedIn
+      </a>
+    </div>
+  </div>
+</section>
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; <span id="year"></span> Dheeren. Built with HTML, CSS &amp; JS.</p>
+    </div>
+  </footer>
+<div id="certModal" class="cert-modal" onclick="closeCertModal(event)">
+  <span class="cert-modal-close" onclick="closeCertModal(event)">&times;</span>
+  <img id="certModalImg" src="" alt="Certificate preview">
+</div>
+
+  <script src="script.js?v=2"></script>
+</body>
+</html>

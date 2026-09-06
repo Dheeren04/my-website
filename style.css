@@ -1,0 +1,540 @@
+/* ============================
+   1. VARIABLES (our palette lives here — change once, updates everywhere)
+   ============================ */
+:root {
+  --bg: #FAF6F0;          /* warm cream background */
+  --bg-muted: #F1EAE0;    /* slightly deeper cream for alternating sections */
+  --text: #2B2724;        /* soft charcoal */
+  --text-muted: #8A8178;  /* warm gray for secondary text */
+  --accent: #C6603D;      /* terracotta */
+  --border: #E4DACB;      /* subtle line color */
+
+  --max-width: 760px;
+  --radius: 6px;
+}
+
+/* ============================
+   2. RESET (removes browser default spacing/quirks)
+   ============================ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ============================
+   3. HEADER / NAV
+   ============================ */
+.site-header {
+  position: sticky;
+  top: 0;
+  background-color: var(--bg);
+  border-bottom: 1px solid var(--border);
+  z-index: 10;
+}
+
+.site-header .container {
+  max-width: 1100px;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 18px;
+  padding-bottom: 18px;
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+}
+
+.nav {
+  display: flex;
+  gap: 28px;
+}
+
+.nav a {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  transition: color 0.15s ease;
+}
+
+.nav a:hover,
+.nav a:focus-visible {
+  color: var(--accent);
+}
+
+/* ============================
+   4. HERO
+   ============================ */
+.hero {
+  position: relative;
+  min-height: 100vh;       /* fills the full screen on load, no gap before the next section */
+  display: flex;
+  align-items: center;     /* vertically centers the text within that full-height space */
+  padding: 100px 0 80px;
+  text-align: left;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* The photo itself. Fixed to the VIEWPORT (not the section), so it stays put
+   in the background as the page scrolls, instead of scrolling away with the hero. */
+.hero-bg {
+  position: fixed;
+  inset: 0;
+  background-image: url("assets/hero-photo.jpg");
+  background-size: cover;
+  background-position: center top;
+  z-index: -2;
+  pointer-events: none; /* clicks pass through it to whatever's above */
+
+  /* Starting state: sharp. JS updates 'filter' and 'transform' live as you scroll. */
+  filter: blur(0px);
+  transform: scale(1);
+  will-change: filter, transform; /* hints the browser to optimize these for animation */
+}
+
+/* A dark, softly-blurred gradient wash on top of the photo so the text side
+   reads clearly against a moody backdrop instead of the flat photo. */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(18, 15, 13, 0.92) 0%,
+    rgba(18, 15, 13, 0.85) 38%,
+    rgba(18, 15, 13, 0.4) 65%,
+    rgba(18, 15, 13, 0) 92%
+  );
+  z-index: -1;
+}
+
+/* Hero text needs light colors now that it sits on a dark gradient, unlike
+   the rest of the page which stays on the light cream background. */
+.hero .container {
+  max-width: 1100px; /* wider than the site's default 760px, so text has room to sit clear of the photo */
+  width: 100%; /* forces the container to fill available width like a normal block element,
+                  instead of shrinking to fit its content the way flex items do by default */
+}
+
+.hero-content {
+  max-width: 460px; /* hard cap so the text block never drifts under the face on wide screens */
+}
+
+.hero .eyebrow {
+  color: var(--accent);
+}
+
+.hero h1 {
+  color: #FAF6F0;
+}
+
+.hero .tagline {
+  color: #D9D2C7;
+}
+
+.hero .btn {
+  border-color: #FAF6F0;
+  color: #FAF6F0;
+}
+
+.hero .btn:hover,
+.hero .btn:focus-visible {
+  background-color: #FAF6F0;
+  color: var(--text);
+}
+
+/* Respect users who've asked their OS to reduce motion: skip live blur-on-scroll,
+   just show it softly blurred and settled the whole time. JS also checks this (see script.js). */
+@media (prefers-reduced-motion: reduce) {
+  .hero-bg {
+    filter: blur(6px);
+    transform: scale(1.04);
+  }
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.hero h1 {
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 12px;
+}
+
+.tagline {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  margin-bottom: 32px;
+}
+
+/* ============================
+   5. BUTTONS
+   ============================ */
+.btn {
+  display: inline-block;
+  padding: 12px 24px;
+  border: 1px solid var(--text);
+  border-radius: var(--radius);
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  cursor: pointer;
+  background: none;
+  font-family: inherit;
+}
+
+.btn:hover,
+.btn:focus-visible {
+  background-color: var(--text);
+  color: var(--bg);
+}
+
+.btn-accent {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-accent:hover,
+.btn-accent:focus-visible {
+  background-color: var(--accent);
+  color: #fff;
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;      /* stacks nicely on smaller screens instead of overflowing */
+  gap: 16px;
+  margin-top: 24px;
+}
+
+/* ============================
+   6. SECTIONS
+   ============================ */
+.section {
+  position: relative;   /* creates a normal stacking context so this reliably paints above the fixed photo */
+  background-color: var(--bg); /* solid — fully covers the fixed hero photo behind it */
+  padding: 72px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-muted {
+  background-color: var(--bg-muted);
+}
+
+.section h2 {
+  font-size: 1.6rem;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+}
+
+.section p {
+  max-width: 60ch;
+  color: var(--text);
+}
+
+/* ===== Eyebrow label (small accent tag above section headings) ===== */
+.eyebrow-label {
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+/* ===== About text styling ===== */
+.about-text {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  max-width: 65ch;
+}
+
+.about-text .highlight {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ============================
+   7. SKILLS
+   ============================ */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.skill-card {
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 20px;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.skill-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(43, 39, 36, 0.1);
+}
+
+.skill-icon {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.skill-card h3 {
+  font-size: 1.05rem;
+  margin-bottom: 6px;
+}
+
+.skill-card p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ============================
+   8. EDUCATION
+   ============================ */
+.edu-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  background-color: var(--bg);
+}
+
+.edu-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.edu-meta {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ============================
+   8.5 CERTIFICATES
+   ============================ */
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.cert-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background-color: var(--bg-muted);
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cert-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(43, 39, 36, 0.1);
+}
+
+.cert-icon {
+  font-size: 1.4rem;
+}
+
+.cert-info h3 {
+  font-size: 1rem;
+  margin-bottom: 2px;
+}
+
+.cert-issuer {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.cert-loading {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ===== Certificate modal (the click-to-view popup) ===== */
+.cert-modal {
+  display: none; /* hidden by default — JS switches this to 'flex' on click */
+  position: fixed;
+  inset: 0;
+  background-color: rgba(20, 16, 14, 0.85);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.cert-modal.active {
+  display: flex;
+}
+
+.cert-modal img {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: var(--radius);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+}
+
+.cert-modal-close {
+  position: absolute;
+  top: 24px;
+  right: 32px;
+  color: #FAF6F0;
+  font-size: 2rem;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* ============================
+   PROJECTS
+   ============================ */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.project-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  background-color: var(--bg-muted);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(43, 39, 36, 0.1);
+}
+
+.project-info h3 {
+  font-size: 1.15rem;
+  margin-bottom: 10px;
+}
+
+.project-desc {
+  font-size: 0.92rem;
+  color: var(--text);
+  margin-bottom: 16px;
+  line-height: 1.6;
+}
+
+.project-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.tag {
+  font-size: 0.78rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+/* A secondary button style — outlined but muted, for the "less primary" action (GitHub vs Live Site) */
+.btn-ghost {
+  border-color: var(--text-muted);
+  color: var(--text-muted);
+}
+
+.btn-ghost:hover {
+  background-color: var(--text-muted);
+  color: var(--bg);
+}
+
+/* ============================
+   9. FOOTER
+   ============================ */
+.site-footer {
+  position: relative;
+  background-color: var(--bg);
+  padding: 32px 0;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* ============================
+   10. RESPONSIVE (mobile)
+   ============================ */
+@media (max-width: 600px) {
+  .header-inner {
+    flex-direction: column;
+    gap: 12px;
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .nav {
+    gap: 18px;
+  }
+
+  .hero {
+    min-height: 100svh;
+    padding: 64px 0 56px;
+    text-align: center;
+  }
+
+  .hero-overlay {
+    background: rgba(18, 15, 13, 0.72);
+  }
+
+  .eyebrow {
+    text-align: center;
+  }
+}
