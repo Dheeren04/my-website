@@ -533,8 +533,12 @@ ul {
   .hero-overlay {
     background: rgba(18, 15, 13, 0.72);
   }
+  .hero-bg {
+  background-position: center 15%;
+}
 
   .eyebrow {
     text-align: center;
   }
+  
 }
