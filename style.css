@@ -582,3 +582,7 @@ ul {
   }
   
 }
+.hero-content > .btn {
+  margin-top: 8px;
+  margin-right: 8px;
+}
