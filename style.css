@@ -12,6 +12,35 @@
   --max-width: 760px;
   --radius: 6px;
 }
+/* Dark theme — same variable names, different values.
+   Everything using var(--bg), var(--text) etc. automatically adapts. */
+:root[data-theme="dark"] {
+  --bg: #1E1B18;
+  --bg-muted: #2A2521;
+  --text: #F1EAE0;
+  --text-muted: #A89C8E;
+  --accent: #E8845A;
+  --border: #3A332C;
+}
+
+.theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.1);
+  border-color: var(--accent);
+}
 
 /* ============================
    2. RESET (removes browser default spacing/quirks)
@@ -509,6 +538,17 @@ ul {
   font-size: 0.85rem;
 }
 
+/* ===== Scroll-reveal: sections fade + slide up as you scroll to them ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 /* ============================
    10. RESPONSIVE (mobile)
    ============================ */

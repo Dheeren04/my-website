@@ -102,3 +102,22 @@ async function loadCertificates() {
 }
 
 loadCertificates();
+// ===== Dark/Light theme toggle =====
+const themeToggle = document.getElementById("themeToggle");
+const root = document.documentElement;
+
+// On load: check if the person already picked a theme before, remember it
+const savedTheme = localStorage.getItem("theme");
+if (savedTheme) {
+  root.setAttribute("data-theme", savedTheme);
+  themeToggle.textContent = savedTheme === "dark" ? "☀️" : "🌙";
+}
+
+themeToggle.addEventListener("click", () => {
+  const isDark = root.getAttribute("data-theme") === "dark";
+  const newTheme = isDark ? "light" : "dark";
+
+  root.setAttribute("data-theme", newTheme);
+  localStorage.setItem("theme", newTheme); // remembers choice on next visit
+  themeToggle.textContent = newTheme === "dark" ? "☀️" : "🌙";
+});
