@@ -38,6 +38,7 @@ if (heroBg && !prefersReducedMotion) {
 
   updateHeroBlur(); // run once on load in case the page is already scrolled (e.g. on refresh)
 }
+
 // ===== Certificate click-to-view modal =====
 function openCertModal(imageSrc, certName) {
   const modal = document.getElementById("certModal");
@@ -61,6 +62,7 @@ document.addEventListener("keydown", (e) => {
     document.getElementById("certModal").classList.remove("active");
   }
 });
+
 // ===== Dynamically load certificates from the backend =====
 async function loadCertificates() {
   const grid = document.getElementById("certGrid");
@@ -102,6 +104,7 @@ async function loadCertificates() {
 }
 
 loadCertificates();
+
 // ===== Dark/Light theme toggle =====
 const themeToggle = document.getElementById("themeToggle");
 const root = document.documentElement;
@@ -121,3 +124,51 @@ themeToggle.addEventListener("click", () => {
   localStorage.setItem("theme", newTheme); // remembers choice on next visit
   themeToggle.textContent = newTheme === "dark" ? "☀️" : "🌙";
 });
+
+// ===== Scroll-reveal animation using IntersectionObserver =====
+// This watches each .reveal element and adds 'visible' the moment it scrolls into view.
+// Wrapped defensively so that if anything fails, content becomes visible anyway
+// instead of staying stuck invisible.
+try {
+  const revealElements = document.querySelectorAll(".reveal");
+
+  if ("IntersectionObserver" in window) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target); // only animate once, not every scroll
+        }
+      });
+    }, { threshold: 0.15 }); // triggers when 15% of the element is visible
+
+    revealElements.forEach(el => revealObserver.observe(el));
+  } else {
+    // Browser doesn't support IntersectionObserver — just show everything immediately
+    revealElements.forEach(el => el.classList.add("visible"));
+  }
+} catch (err) {
+  console.error("Reveal animation failed, showing content anyway:", err);
+  document.querySelectorAll(".reveal").forEach(el => el.classList.add("visible"));
+}
+
+// ===== Active nav link highlighting based on scroll position (scrollspy) =====
+try {
+  const sections = document.querySelectorAll("section[id]");
+  const navLinks = document.querySelectorAll(".nav a");
+
+  const spyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.getAttribute("id");
+        navLinks.forEach(link => {
+          link.classList.toggle("active", link.getAttribute("href") === `#${id}`);
+        });
+      }
+    });
+  }, { rootMargin: "-40% 0px -55% 0px" }); // triggers when a section is roughly centered in the viewport
+
+  sections.forEach(section => spyObserver.observe(section));
+} catch (err) {
+  console.error("Scrollspy failed (non-critical):", err);
+}
